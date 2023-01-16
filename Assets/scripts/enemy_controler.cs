@@ -27,7 +27,6 @@ public class enemy_controler : MonoBehaviour
     {
       canHit = false;
       playerStats.SetHp(playerStats.GetHp() - stats.damage);
-      Debug.Log("hit player for " + stats.damage + "dam");
       yield return new WaitForSeconds(1f);
       canHit = true;
     }

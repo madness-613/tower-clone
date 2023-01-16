@@ -12,7 +12,11 @@ public class tower_upgrade : MonoBehaviour
   public float hpRegenUpgradeAmount;
   private GameObject statsUi;
   private tower_stats stats;
+  private Vector2 statsUp;
+  private Vector2 statsDown;
   private GameObject upgradeUi;
+  private Vector2 upgradeUp;
+  private Vector2 upgradeDown;
   private bool uiOpen;
   [SerializeField] private Text rangeUpgradeText;
   [SerializeField] private Text damageUpgradeText;
@@ -25,45 +29,49 @@ public class tower_upgrade : MonoBehaviour
       statsUi = GameObject.Find("stats");
       stats = statsUi.GetComponent<tower_stats>();
       upgradeUi = this.gameObject;
-      rangeUpgradeText.text = "range : " + stats.GetRange();
-      damageUpgradeText.text = "damage : " + stats.GetDamage();
-      hpUpgradeText.text = "max Hp : " + stats.GetMaxHp();
-      hpRegenUpgradeText.text = "hp regen : " + stats.GetMaxHp();
+      statsUp = new Vector2(0 , statsUi.transform.localScale.y/2 + upgradeUi.transform.localScale.y/2);
+      statsDown = new Vector2(0 , statsUi.transform.localScale.y/2);
+      upgradeUp = new Vector2(0 , upgradeUi.transform.localScale.y/2);
+      upgradeDown = new Vector2(0 , -upgradeUi.transform.localScale.y/2);
+      rangeUpgradeText.text = "" + stats.GetRange();
+      damageUpgradeText.text = "" + stats.GetDamage();
+      hpUpgradeText.text = "" + stats.GetMaxHp();
+      hpRegenUpgradeText.text = "" + stats.GetHpRegen();
     }
 
     public void UpgradeRange()
     {
       stats.SetRange(stats.GetRange() + rangeUpgradeAmount);
-      rangeUpgradeText.text = "range : " + stats.GetRange();
+      rangeUpgradeText.text = "" + stats.GetRange();
     }
 
     public void UpgradDamage()
     {
       stats.SetDamage(stats.GetDamage() + damageUpgradeAmount);
-      damageUpgradeText.text = "damage : " + stats.GetDamage();
+      damageUpgradeText.text = "" + stats.GetDamage();
     }
 
     public void UpgradeHp()
     {
       stats.SetMaxHp(stats.GetMaxHp() + hpUpgradeAmount);
-      hpUpgradeText.text = "max hp : " + stats.GetMaxHp();
+      hpUpgradeText.text = "" + stats.GetMaxHp();
     }
 
     public void UpgradeHpRegen()
     {
       stats.SetHpRegen(stats.GetHpRegen() + hpRegenUpgradeAmount);
-      hpRegenUpgradeText.text = "hp regen : " + stats.GetHpRegen();
+      hpRegenUpgradeText.text = "" + stats.GetHpRegen();
     }
 
     public void AdjustUi()
     {
       uiOpen = !uiOpen;
       if(uiOpen){
-        statsUi.transform.position = new Vector2(statsUi.transform.position.x , 120);
-        upgradeUi.transform.position = new Vector2(upgradeUi.transform.position.x , 50);
+        statsUi.transform.position = statsUp;
+        upgradeUi.transform.position = upgradeUp;
       }else{
-        statsUi.transform.position = new Vector2(statsUi.transform.position.x , 25);
-        upgradeUi.transform.position = new Vector2(upgradeUi.transform.position.x , -50);
+        statsUi.transform.position = statsDown;
+        upgradeUi.transform.position = upgradeDown;
       }
     }
 }
